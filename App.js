@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadingScreen from './screens/LoadingScreen';
 import LoginScreen from './screens/LoginScreen';
 import SafetyScreen from './screens/SafetyScreen';
+import ChemistryScreen from './screens/ChemistryScreen';
+import PhysicsScreen from './screens/PhysicsScreen';
+import ComputerScreen from './screens/ComputerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +30,9 @@ export default function App() {
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Safety" component={SafetyScreen} />
+            <Stack.Screen name="Chemistry" component={ChemistryScreen} />
+            <Stack.Screen name="Physics" component={PhysicsScreen} />
+            <Stack.Screen name="Computer" component={ComputerScreen} />
           </>
         )}
       </Stack.Navigator>
