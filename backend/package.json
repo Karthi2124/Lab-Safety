@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "body-parser": "^2.2.0",
+>>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
