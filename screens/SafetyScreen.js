@@ -1,174 +1,90 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 =======
 import React from "react";
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+import React from "react";
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
 import { 
   View, 
   Text, 
   StyleSheet, 
+<<<<<<< HEAD
 <<<<<<< HEAD
   FlatList, 
   ActivityIndicator, 
   TouchableOpacity,
   ScrollView,
   Image
+=======
+  TouchableOpacity, 
+  Image, 
+  ScrollView 
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
 } from "react-native";
 
-const SafetyScreen = () => {
-  const [activeTab, setActiveTab] = useState("chemistry");
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const SafetyScreen = ({ navigation }) => {
+  const labs = [
+    { 
+      name: "Chemistry Lab", 
+      screen: "Chemistry", 
+      icon: require("../assets/flask.png"),
+      overview: "Chemical storage and handling safety monitoring",
+      ventilation: { status: "optimal", level: "92%", lastChecked: "2 mins ago" },
+      hazards: ["Chemical exposure", "Flammable materials"]
+    },
+    { 
+      name: "Physics Lab", 
+      screen: "Physics", 
+      icon: require("../assets/physics.png"),
+      overview: "Radiation and equipment safety systems",
+      ventilation: { status: "warning", level: "78%", lastChecked: "5 mins ago" },
+      hazards: ["Radiation levels", "Laser safety"]
+    },
+    { 
+      name: "Computer Lab", 
+      screen: "Computer", 
+      icon: require("../assets/computer.png"),
+      overview: "Ergonomic and electrical safety monitoring",
+      ventilation: { status: "optimal", level: "95%", lastChecked: "1 min ago" },
+      hazards: ["Eye strain", "Posture alerts"]
+    },
+  ];
 
-  useEffect(() => {
-    // Simulate API call
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Simulated data for each tab
-        const mockData = {
-          chemistry: [
-            { _id: "1", parameter: "Chemical Exposure", value: "0.2 ppm", status: "Safe", note: "Within safe limits" },
-            { _id: "2", parameter: "Flammable Materials", value: "3 containers", status: "Warning", note: "Approaching capacity" },
-            { _id: "3", parameter: "Ventilation", value: "85%", status: "Safe" }
-          ],
-          physics: [
-            { _id: "1", parameter: "Radiation Levels", value: "0.05 μSv", status: "Safe" },
-            { _id: "2", parameter: "Laser Safety", value: "Class 3B", status: "Danger", note: "Requires protective eyewear" }
-          ],
-          computer: [
-            { _id: "1", parameter: "Eye Strain", value: "Moderate", status: "Warning", note: "Take regular breaks" },
-            { _id: "2", parameter: "Posture", value: "Good", status: "Safe" }
-          ]
-        };
-        
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        setData(mockData[activeTab] || []);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [activeTab]);
-
-  const renderTabButton = (tabName, displayName, icon) => (
-    <TouchableOpacity
-      style={[
-        styles.tabButton,
-        activeTab === tabName && styles.activeTab
-      ]}
-      onPress={() => setActiveTab(tabName)}
-    >
-      {icon && (
-        <Image 
-          source={icon} 
-          style={[
-            styles.tabIcon,
-            activeTab === tabName && styles.activeTabIcon
-          ]} 
-        />
-      )}
-      <Text style={[
-        styles.tabText,
-        activeTab === tabName && styles.activeTabText
-      ]}>
-        {displayName}
-      </Text>
-    </TouchableOpacity>
-  );
-
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <View style={styles.cardHeader}>
-        <Text style={styles.parameter}>{item.parameter}</Text>
-        <View style={[
-          styles.statusIndicator,
-          { backgroundColor: getStatusColor(item.status) }
-        ]}>
-          <Text style={styles.statusText}>{item.status}</Text>
-        </View>
-      </View>
-      
-      <View style={styles.valueRow}>
-        <Text style={styles.valueLabel}>Current Value:</Text>
-        <Text style={styles.value}>{item.value}</Text>
-      </View>
-      
-      {item.note && (
-        <View style={styles.noteContainer}>
-          <Text style={styles.noteLabel}>Note:</Text>
-          <Text style={styles.note}>{item.note}</Text>
-        </View>
-      )}
-    </View>
-  );
-
-  const getStatusColor = (status) => {
+  const getVentilationColor = (status) => {
     switch(status.toLowerCase()) {
-      case "safe":
-        return "#2ecc71";
-      case "warning":
-        return "#f39c12";
-      case "danger":
-        return "#e74c3c";
-      default:
-        return "#95a5a6";
+      case "optimal": return "#10b981";
+      case "warning": return "#f59e0b";
+      case "critical": return "#ef4444";
+      default: return "#64748b";
     }
   };
 
-  if (loading && data.length === 0) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color="#3498db" />
-        <Text style={styles.loadingText}>Loading {activeTab} lab data...</Text>
-      </View>
-    );
-  }
-
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Lab Safety Dashboard</Text>
-        <Text style={styles.subHeader}>Real-time monitoring system</Text>
+        <Text style={styles.header}>Lab Safety Monitoring</Text>
+        <Text style={styles.subHeader}>Real-time ventilation and hazard status</Text>
       </View>
-      
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tabContainer}
-      >
-        {renderTabButton("chemistry", "Chemistry", require('../assets/flask.png'))}
-        {renderTabButton("physics", "Physics", require('../assets/physics.png'))}
-        {renderTabButton("computer", "Computer", require('../assets/computer.png'))}
-      </ScrollView>
 
-      {data.length > 0 ? (
-        <FlatList
-          data={data}
-          keyExtractor={(item) => item._id}
-          renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
-          ListHeaderComponent={
-            <View style={styles.sectionHeaderContainer}>
-              <Text style={styles.sectionHeader}>
-                {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Lab
-              </Text>
-              <View style={styles.statusLegend}>
-                <View style={[styles.legendItem, { backgroundColor: "#2ecc71" }]}>
-                  <Text style={styles.legendText}>Safe</Text>
-                </View>
-                <View style={[styles.legendItem, { backgroundColor: "#f39c12" }]}>
-                  <Text style={styles.legendText}>Warning</Text>
-                </View>
-                <View style={[styles.legendItem, { backgroundColor: "#e74c3c" }]}>
-                  <Text style={styles.legendText}>Danger</Text>
-                </View>
+      <View style={styles.cardsContainer}>
+        {labs.map((lab) => (
+          <TouchableOpacity
+            key={lab.name}
+            style={styles.card}
+            onPress={() => navigation.navigate(lab.screen)}
+            activeOpacity={0.8}
+          >
+            <View style={styles.cardHeader}>
+              <Image source={lab.icon} style={styles.icon} />
+              <View>
+                <Text style={styles.cardTitle}>{lab.name}</Text>
+                <Text style={styles.cardSubtitle}>{lab.overview}</Text>
               </View>
             </View>
+<<<<<<< HEAD
           }
         />
       ) : (
@@ -251,6 +167,8 @@ const SafetyScreen = ({ navigation }) => {
                 <Text style={styles.cardSubtitle}>{lab.overview}</Text>
               </View>
             </View>
+=======
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
             
             {/* Ventilation Status Bar */}
             <View style={styles.section}>
@@ -293,7 +211,10 @@ const SafetyScreen = ({ navigation }) => {
         </Text>
       </View>
     </ScrollView>
+<<<<<<< HEAD
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
   );
 };
 
@@ -301,27 +222,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
     backgroundColor: "#f5f7fa",
+=======
+    backgroundColor: "#f8fafc",
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
   },
   headerContainer: {
-    padding: 20,
-    paddingBottom: 10,
+    padding: 24,
+    paddingBottom: 16,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: "#ecf0f1",
+    marginTop: 15,
+    paddingTop: 30,
+    borderBottomColor: "#e2e8f0",
   },
   header: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "700",
-    color: "#2c3e50",
+    color: "#1e293b",
     textAlign: "center",
+    marginBottom: 4,
   },
   subHeader: {
     fontSize: 14,
-    color: "#7f8c8d",
+    color: "#64748b",
     textAlign: "center",
-    marginTop: 4,
   },
+<<<<<<< HEAD
   tabContainer: {
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -422,10 +350,15 @@ const styles = StyleSheet.create({
   cardsContainer: {
     padding: 16,
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+  cardsContainer: {
+    padding: 16,
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
   },
   card: {
     backgroundColor: "#fff",
     borderRadius: 12,
+<<<<<<< HEAD
 <<<<<<< HEAD
     padding: 18,
     marginBottom: 15,
@@ -441,96 +374,99 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 8,
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+    padding: 20,
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
     elevation: 3,
   },
   cardHeader: {
     flexDirection: "row",
 <<<<<<< HEAD
+<<<<<<< HEAD
     justifyContent: "space-between",
+=======
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 16,
   },
-  parameter: {
-    fontSize: 16,
+  icon: {
+    width: 40,
+    height: 40,
+    marginRight: 12,
+    tintColor: "#3b82f6",
+  },
+  cardTitle: {
+    fontSize: 18,
     fontWeight: "600",
-    color: "#2c3e50",
-    flex: 1,
+    color: "#1e293b",
   },
-  statusIndicator: {
-    paddingVertical: 5,
-    paddingHorizontal: 12,
-    borderRadius: 15,
+  cardSubtitle: {
+    fontSize: 13,
+    color: "#64748b",
   },
-  statusText: {
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: "#64748b",
+    marginBottom: 8,
+    letterSpacing: 0.5,
+  },
+  ventilationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  ventilationPill: {
+    borderRadius: 12,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  ventilationText: {
     color: "#fff",
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "700",
   },
-  valueRow: {
+  ventilationLevel: {
+    fontSize: 14,
+    color: "#1e293b",
+    marginRight: 10,
+  },
+  ventilationTime: {
+    fontSize: 12,
+    color: "#94a3b8",
+  },
+  hazardsContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  hazardPill: {
+    backgroundColor: "#f1f5f9",
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    marginRight: 8,
     marginBottom: 8,
   },
-  valueLabel: {
-    fontSize: 14,
-    color: "#7f8c8d",
-    marginRight: 8,
+  hazardText: {
+    fontSize: 12,
+    color: "#475569",
   },
-  value: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#34495e",
-  },
-  noteContainer: {
-    flexDirection: "row",
-    marginTop: 10,
-    paddingTop: 10,
+  cardFooter: {
     borderTopWidth: 1,
-    borderTopColor: "#ecf0f1",
+    borderTopColor: "#f1f5f9",
+    paddingTop: 12,
   },
-  noteLabel: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#7f8c8d",
-    marginRight: 8,
-  },
-  note: {
-    fontSize: 13,
-    color: "#7f8c8d",
-    flex: 1,
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f7fa",
-  },
-  loadingText: {
-    marginTop: 15,
-    fontSize: 15,
-    color: "#7f8c8d",
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 30,
-  },
-  emptyImage: {
-    width: 120,
-    height: 120,
-    marginBottom: 20,
-    opacity: 0.6,
-  },
-  emptyText: {
-    fontSize: 17,
-    color: "#7f8c8d",
-    textAlign: "center",
-    marginBottom: 5,
-    fontWeight: "500",
-  },
-  emptySubText: {
+  viewDetails: {
     fontSize: 14,
+<<<<<<< HEAD
     color: "#bdc3c7",
     textAlign: "center",
 =======
@@ -609,6 +545,8 @@ const styles = StyleSheet.create({
   },
   viewDetails: {
     fontSize: 14,
+=======
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
     fontWeight: "500",
     color: "#3b82f6",
     textAlign: "right",
@@ -632,7 +570,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#065f46",
     lineHeight: 20,
+<<<<<<< HEAD
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
   },
 });
 

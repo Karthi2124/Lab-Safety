@@ -11,9 +11,15 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-masked-view/masked-view": "0.3.2",
+    "@react-navigation/bottom-tabs": "^7.4.6",
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/native-stack": "^7.3.25",
-    "@react-navigation/stack": "^7.4.5",
+    "@react-navigation/stack": "^7.4.7",
     "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
@@ -36,9 +42,15 @@
     "react": "19.0.0",
     "react-native": "0.79.5",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    "react-native-gesture-handler": "~2.24.0",
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
     "react-native-paper": "^5.14.5",
+    "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
+<<<<<<< HEAD
     "react-navigation": "^5.0.0",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-reanimated": "~3.17.4",
@@ -52,6 +64,10 @@
     "react-native-vector-icons": "^10.3.0",
     "react-navigation": "^5.0.0"
 >>>>>>> 609dd53 (13/8/2025 dharsan login page done in mongoDB)
+=======
+    "react-native-vector-icons": "^10.3.0",
+    "react-navigation": "^5.0.0"
+>>>>>>> e0e050c5a224a2c62e7c3398cb2e4cc185839ea8
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
